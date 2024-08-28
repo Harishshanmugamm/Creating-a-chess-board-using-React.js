@@ -6,7 +6,7 @@ import { FaRegChessRook, FaRegChessKnight, FaRegChessBishop, FaRegChessQueen, Fa
 
 
 const Chess = () => { 
-    const initialBoard = [ 
+    const initial = [ 
         ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'], 
         ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'], 
         ['', '', '', '', '', '', '', ''], 
@@ -17,25 +17,25 @@ const Chess = () => {
         ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'] 
     ]; 
 
-    const [board, setBoard] = useState(initialBoard); 
-    const [draggedPiece, setDraggedPiece] = useState(null); 
-    const [draggedPos, setDraggedPos] = useState(null); 
+    const [board, setBoard] = useState(initial); 
+    const [dragpiece, setdragpiece] = useState(null); 
+    const [dragpos, setdragpos] = useState(null); 
 
-    const handleDragStart = (piece, row, col) => { 
-        setDraggedPiece(piece); 
-        setDraggedPos({ row, col }); 
+    const handledrags = (piece, row, col) => { 
+        setdragpiece(piece); 
+        setdragpos({ row, col }); 
     }; 
 
-    const handleDrop = (row, col) => { 
+    const handledrop = (row, col) => { 
         const newBoard = board.map(r => r.slice()); 
-        newBoard[draggedPos.row][draggedPos.col] = ''; 
-        newBoard[row][col] = draggedPiece; 
+        newBoard[dragpos.row][dragpos.col] = ''; 
+        newBoard[row][col] = dragpiece; 
         setBoard(newBoard); 
-        setDraggedPiece(null); 
-        setDraggedPos(null); 
+        setdragpiece(null); 
+        setdragpos(null); 
     }; 
 
-    const renderPiece = (piece) => { 
+    const renders = (piece) => { 
         const icons = { 
             'r': <FaChessRook />, 'n': <FaChessKnight />, 'b': <FaChessBishop />, 'q': <FaChessQueen />, 'k': <FaChessKing />, 'p': <FaChessPawn />, 
             'R': <FaRegChessRook />, 'N': <FaRegChessKnight />, 'B': <FaRegChessBishop />, 'Q': <FaRegChessQueen />, 'K': <FaRegChessKing />, 'P': <FaRegChessPawn />
@@ -54,15 +54,15 @@ const Chess = () => {
                                 key={`${i}_${j}`} 
                                 className={`square ${isBlack ? 'black' : 'white'}`} 
                                 onDragOver={(e) => e.preventDefault()} 
-                                onDrop={() => handleDrop(i, j)} 
+                                onDrop={() => handledrop(i, j)} 
                             > 
                                 {piece && ( 
                                     <span 
                                         draggable 
-                                        onDragStart={() => handleDragStart(piece, i, j)} 
+                                        onDragStart={() => handledrags(piece, i, j)} 
                                         className="draggable" 
                                     > 
-                                        {renderPiece(piece)} 
+                                        {renders(piece)} 
                                     </span> 
                                 )} 
                             </div> 
